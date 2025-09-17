@@ -139,7 +139,7 @@ export default function MatrizForm() {
     <form onSubmit={handleSubmit} className="space-y-6 pb-32">
       {/* Foto */}
       <div className="grid gap-2">
-        <label className="font-medium">Foto da matriz</label>
+        <label className="font-medium">Imagem da matriz</label>
         <input
           type="file"
           accept="image/*"
@@ -158,7 +158,7 @@ export default function MatrizForm() {
       {/* Campos principais */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-1">
-          <label className="font-medium">Nome que o cliente vê</label>
+          <label className="font-medium">Nome de exibição</label>
           <input
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
@@ -168,7 +168,7 @@ export default function MatrizForm() {
           />
         </div>
         <div className="grid gap-1">
-          <label className="font-medium">Nome original da peça</label>
+          <label className="font-medium">Nome interno</label>
           <input
             value={originalName}
             onChange={(e) => setOriginalName(e.target.value)}
@@ -182,13 +182,13 @@ export default function MatrizForm() {
       {/* Taxa e % de lucro */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-1 sm:max-w-xs">
-          <label className="font-medium">Taxa de mão de obra (R$/h)</label>
+          <label className="font-medium">Custo hora da mão de obra (R$/h)</label>
           <div className="flex items-stretch border rounded overflow-hidden">
-            <span className="px-3 py-2 text-sm bg-white/10 border-r">R$</span>
+            <span className="px-3 py-2 text-sm bg-white/10 border-r flex items-center justify-center">R$</span>
             <input
               type="text"
               inputMode="decimal"
-              placeholder="ex.: 120,00"
+              placeholder="00,00"
               value={laborRateInput}
               onChange={(e) => setLaborRateInput(e.target.value)}
               className="flex-1 p-2 bg-black/20"
@@ -197,17 +197,17 @@ export default function MatrizForm() {
         </div>
 
         <div className="grid gap-1 sm:max-w-xs">
-          <label className="font-medium">Porcentagem de lucro (%)</label>
+          <label className="font-medium">Margem de lucro (%)</label>
           <div className="flex items-stretch border rounded overflow-hidden">
             <input
               type="text"
               inputMode="decimal"
-              placeholder="ex.: 30"
+              placeholder="0"
               value={profitPctInput}
               onChange={(e) => setProfitPctInput(e.target.value)}
               className="flex-1 p-2 bg-black/20"
             />
-            <span className="px-3 py-2 text-sm bg-white/10 border-l">%</span>
+            <span className="px-3 py-2 text-sm bg-white/10 border-l flex items-center justify-center">%</span>
           </div>
           <p className="text-xs opacity-70">Aplicado sobre o custo de mão de obra.</p>
         </div>
@@ -216,14 +216,14 @@ export default function MatrizForm() {
       {/* Partes */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Partes da montagem</h2>
+          <h2 className="font-semibold">Componentes da matriz</h2>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => addPart()}
               className="px-3 py-2 rounded border hover:bg-white/10"
             >
-              + Adicionar parte
+              + Adicionar componente
             </button>
           </div>
         </div>
@@ -235,14 +235,15 @@ export default function MatrizForm() {
               <div key={p.id} className="grid grid-cols-12 gap-2 items-center">
                 <input
                   className="col-span-7 border rounded p-2 bg-black/20"
-                  placeholder={`Parte #${idx + 1} (ex.: Macho Lado 1)`}
+                  placeholder={`Nome do componente (ex.: Macho Lado 1)`}
+                  // placeholder={`Parte #${idx + 1} (ex.: Macho Lado 1)`}
                   value={p.name}
                   onChange={(e) => updatePart(p.id, { name: e.target.value })}
                   required
                 />
                 <input
                   className="col-span-3 border rounded p-2 bg-black/20"
-                  placeholder="hh:mm ou 2,5"
+                  placeholder="Tempo estimado (h)"
                   value={p.inputHours}
                   onChange={(e) => updatePart(p.id, { inputHours: e.target.value })}
                   aria-label="Horas trabalhadas"
@@ -269,21 +270,21 @@ export default function MatrizForm() {
         <div className="rounded-xl border border-white/30 bg-black/70 backdrop-blur px-4 py-3 shadow-lg">
           <div className="flex flex-wrap items-center justify-between gap-3 text-[15px]">
             <span className="px-2 py-1 rounded-md bg-white/10 border border-white/20 font-medium">
-              Total de horas: <span className="font-semibold">{totalHours.toFixed(2)} h</span>
+              Tempo total: <span className="font-semibold">{totalHours.toFixed(2)} h</span>
             </span>
 
             <div className="flex flex-wrap items-center gap-2">
               <span className="px-2 py-1 rounded-md bg-white/10 border border-white/20">
-                Taxa aplicada: <strong>{laborRate ? `${brl(laborRate)} / h` : '—'}</strong>
+                Custo hora aplicado: <strong>{laborRate ? `${brl(laborRate)} / h` : '—'}</strong>
               </span>
               <span className={`px-2 py-1 rounded-md border border-white/20 ${laborRate ? 'bg-white/10' : 'bg-white/10'} font-semibold`}>
-                Custo MO: {laborRate ? brl(laborCost) : '—'}
+                Custo Mão de Obra: {laborRate ? brl(laborCost) : '—'}
               </span>
               <span className={`px-2 py-1 rounded-md border border-white/20 ${laborRate ? 'bg-white/10' : 'bg-white/10'} font-semibold`}>
                 Lucro: {laborRate ? brl(profitValue) : '—'} {profitPct ? `(${profitPct.toFixed(2)}%)` : ''}
               </span>
               <span className={`px-2 py-1 rounded-md border border-white/20 ${laborRate ? 'bg-white text-black' : 'bg-white/10'} font-semibold`}>
-                Preço com lucro: {laborRate ? brl(priceWithProfit) : '—'}
+                Preço final: {laborRate ? brl(priceWithProfit) : '—'}
               </span>
             </div>
           </div>
@@ -297,7 +298,7 @@ export default function MatrizForm() {
           disabled={submitting}
           className="px-4 py-2 rounded bg-white text-black font-medium hover:opacity-90 disabled:opacity-60"
         >
-          {submitting ? 'Salvando...' : 'Salvar matriz'}
+          {submitting ? 'Salvando...' : 'Salvar'}
         </button>
         <button
           type="button"

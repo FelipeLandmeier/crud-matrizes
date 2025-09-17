@@ -1,8 +1,9 @@
 import "./globals.css";
 import Link from "next/link";
+import logo from '@/public/images/logo.png';
 
 export const metadata = {
-  title: "Catálogo de Matrizes",
+  title: "Início",
   description: "Sistema de orçamento e estoque",
 };
 
@@ -15,9 +16,9 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className="bg-gray-50 text-gray-800">
         <header className="bg-white shadow-sm">
-          <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="max-w-6xl mx-auto px-6 py-1 flex justify-between items-center">
             <Link href="/" className="text-xl font-bold text-blue-600 hover:text-blue-700 transition">
-              Catálogo
+            <img src="/images/vipi_matrizes_0.png" alt="Logo da Empresa" className="h-10 w-auto"/>
             </Link>
             <nav>
               <Link
