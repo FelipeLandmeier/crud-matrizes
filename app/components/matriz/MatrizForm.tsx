@@ -184,7 +184,7 @@ export default function MatrizForm() {
         <div className="grid gap-1 sm:max-w-xs">
           <label className="font-medium">Custo hora da mão de obra (R$/h)</label>
           <div className="flex items-stretch border rounded overflow-hidden">
-            <span className="px-3 py-2 text-sm bg-white/10 border-r flex items-center justify-center">R$</span>
+            <span className="w-10 px-3 py-2 text-sm bg-white/10 border-r flex items-center justify-center">R$</span>
             <input
               type="text"
               inputMode="decimal"
@@ -194,6 +194,7 @@ export default function MatrizForm() {
               className="flex-1 p-2 bg-black/20"
             />
           </div>
+          <p className="text-xs opacity-70">Custo de mão de obra por hora trabalhada.</p>
         </div>
 
         <div className="grid gap-1 sm:max-w-xs">
@@ -207,7 +208,7 @@ export default function MatrizForm() {
               onChange={(e) => setProfitPctInput(e.target.value)}
               className="flex-1 p-2 bg-black/20"
             />
-            <span className="px-3 py-2 text-sm bg-white/10 border-l flex items-center justify-center">%</span>
+            <span className="w-10 px-3 py-2 text-sm bg-white/10 border-l flex items-center justify-center">%</span>
           </div>
           <p className="text-xs opacity-70">Aplicado sobre o custo de mão de obra.</p>
         </div>

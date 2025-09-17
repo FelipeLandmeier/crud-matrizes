@@ -12,17 +12,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-md border p-8">
         {/* espaço pra logo futuramente */}
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Área Restrita</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Acesse sua conta</h1>
+          {/* <h1 className="text-2xl font-bold text-gray-800">Área Restrita</h1> */}
           <p className="text-gray-500 text-sm">Faça login para continuar</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-500">
               E-mail
             </label>
             <input
@@ -37,7 +38,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="senha" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="senha" className="block text-sm font-medium text-gray-500">
               Senha
             </label>
             <input
@@ -57,6 +58,7 @@ export default function LoginPage() {
           >
             Entrar
           </button>
+          <p className="text-gray-500 text-sm">Não possui conta? <a className="text-blue-500 text-sm" href="">Registre-se.</a></p>
         </form>
       </div>
     </div>

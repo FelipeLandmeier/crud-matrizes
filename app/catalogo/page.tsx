@@ -14,16 +14,24 @@ export default function CatalogoPage() {
         {matrizes.map((m) => (
           <div
             key={m.id}
-            className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition"
+            className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition flex items-center justify-between gap-4"
           >
-            <h3 className="font-semibold text-lg text-gray-800">{m.nome}</h3>
-            <p className="text-sm text-gray-500">{m.categoria}</p>
-            <Link
-              href={`/matriz/${m.id}`}
-              className="inline-block mt-4 text-blue-600 font-medium hover:underline"
-            >
-              Ver detalhes →
-            </Link>
+            <div>
+              <h3 className="font-semibold text-lg text-gray-800">{m.nome}</h3>
+              <p className="text-sm text-gray-500">{m.categoria}</p>
+              <Link
+                href={`/matriz/${m.id}`}
+                className="inline-block mt-2 text-blue-600 font-medium hover:underline"
+              >
+                Ver detalhes →
+              </Link>
+            </div>
+
+            <img
+              src="/images/default.png"
+              alt={`Imagem da ${m.nome}`}
+              className="h-24 w-24 object-cover rounded-md"
+            />
           </div>
         ))}
       </div>
