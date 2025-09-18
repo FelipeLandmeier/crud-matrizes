@@ -12,53 +12,47 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-md border p-8">
-        {/* espaço pra logo futuramente */}
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Acesse sua conta</h1>
-          {/* <h1 className="text-2xl font-bold text-gray-800">Área Restrita</h1> */}
-          <p className="text-gray-500 text-sm">Faça login para continuar</p>
+    <div className="flex items-center justify-center min-h-screen bg-[#161616]">
+      <div className="w-full max-w-md text-center p-8">
+        {/* Logo */}
+        <div className="mb-6">
+          <h1 className="text-white font-bold text-lg">*LOGO DA VIPI*</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-500">
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="exemplo@email.com"
-              required
-            />
-          </div>
+        {/* Título */}
+        <h2 className="text-white text-lg font-bold mb-2">Acesse sua conta</h2>
+        <p className="text-white text-sm mb-6">
+          Faça login para continuar como Administrador
+        </p>
 
-          <div>
-            <label htmlFor="senha" className="block text-sm font-medium text-gray-500">
-              Senha
-            </label>
-            <input
-              type="password"
-              id="senha"
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
-          </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            id="email"
+            className="w-full px-4 py-2 rounded-md bg-white text-black placeholder-gray-400 focus:outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@dominio.com"
+            required
+          />
+
+          <input
+            type="password"
+            id="senha"
+            className="w-full px-4 py-2 rounded-md bg-white text-black placeholder-gray-400 focus:outline-none"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="senha"
+            required
+          />
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+            className="w-full bg-[#949090] text-white py-2 rounded-md font-bold hover:bg-gray-600 transition cursor-pointer"
           >
-            Entrar
+            ENTRAR
           </button>
-          <p className="text-gray-500 text-sm">Não possui conta? <a className="text-blue-500 text-sm" href="">Registre-se.</a></p>
         </form>
       </div>
     </div>
