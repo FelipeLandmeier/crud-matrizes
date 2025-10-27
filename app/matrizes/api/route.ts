@@ -1,36 +1,70 @@
-import { NextRequest, NextResponse } from 'next/server';
+import pool from "@/lib/db";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  // usado pelo form para ler a taxa do servidor
-  const getRate = req.nextUrl.searchParams.get('getRate');
-  if (getRate) {
-    const laborRate = Number(process.env.LABOR_RATE ?? '0');
-    return NextResponse.json({ laborRate });
+// GET – listar matrizes
+export async function GET() {
+  try {
+    const result = await pool.query("SELECT * FROM matrizes ORDER BY id DESC");
+    return NextResponse.json(result.rows);
+  } catch (error) {
+    console.error("Erro ao listar matrizes:", error);
+    return NextResponse.json({ error: "Erro ao buscar matrizes" }, { status: 500 });
   }
-  return NextResponse.json({ ok: true });
 }
 
-export async function POST(req: NextRequest) {
+// POST – criar nova matriz
+export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const data = await req.json();
+    const { nome, codigo, categoria, tamanho, material, custo, lucro, preco, imagem, descricao } = data;
 
-    // TODO: aqui você valida com Zod/Valibot, salva no DB e armazena imagem
-    // Exemplo de log (remova em prod):
-    console.log('Nova matriz recebida:', {
-      displayName: body.displayName,
-      originalName: body.originalName,
-      parts: body.parts?.length,
-      totalHours: body.totalHours,
-      laborRate: body.laborRate,
-      laborCost: body.laborCost,
-      hasImage: !!body.imageBase64,
-    });
+    const result = await pool.query(
+      `INSERT INTO matrizes (nome, codigo, categoria, tamanho, material, custo, lucro, preco, imagem, descricao)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
+      [nome, codigo, categoria, tamanho, material, custo, lucro, preco, imagem, descricao]
+    );
 
-    // Simula ID gerado
-    const id = 'mx_' + Math.random().toString(36).slice(2, 8);
+    return NextResponse.json(result.rows[0]);
+  } catch (error) {
+    console.error("Erro ao salvar matriz:", error);
+    return NextResponse.json({ error: "Erro ao salvar matriz" }, { status: 500 });
+  }
+}
 
-    return NextResponse.json({ id, ok: true });
-  } catch (e) {
-    return NextResponse.json({ ok: false, error: 'Invalid payload' }, { status: 400 });
+// PUT – atualizar matriz existente
+export async function PUT(req: Request) {
+  try {
+    const data = await req.json();
+    const { id, nome, codigo, categoria, tamanho, material, custo, lucro, preco, imagem, descricao } = data;
+
+    const result = await pool.query(
+      `UPDATE matrizes
+       SET nome=$1, codigo=$2, categoria=$3, tamanho=$4, material=$5, custo=$6, lucro=$7, preco=$8, imagem=$9, descricao=$10
+       WHERE id=$11 RETURNING *`,
+      [nome, codigo, categoria, tamanho, material, custo, lucro, preco, imagem, descricao, id]
+    );
+
+    return NextResponse.json(result.rows[0]);
+  } catch (error) {
+    console.error("Erro ao atualizar matriz:", error);
+    return NextResponse.json({ error: "Erro ao atualizar matriz" }, { status: 500 });
+  }
+}
+
+// DELETE – remover matriz
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "ID não informado" }, { status: 400 });
+    }
+
+    await pool.query("DELETE FROM matrizes WHERE id=$1", [id]);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Erro ao excluir matriz:", error);
+    return NextResponse.json({ error: "Erro ao excluir matriz" }, { status: 500 });
   }
 }
