@@ -1,15 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login:", { email, senha });
-  };
+
+
+     if (email === "admin@vipi.com" && senha === "123456") {
+       document.cookie = "auth=true; path=/;";
+
+       router.push("/admin"); //
+     } else {
+       alert("Credenciais inválidas. Verifique seu e-mail e senha.");
+     }
+   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#161616]">
@@ -21,11 +31,9 @@ export default function LoginPage() {
 
         {/* Título */}
         <h2 className="text-white text-lg font-bold mb-2">Acesse sua conta</h2>
-        <p className="text-white text-sm mb-6">
-          Faça login para continuar como Administrador
-        </p>
 
-        {/* Form */}
+
+        {/* Formulário */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
@@ -51,8 +59,15 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-[#949090] text-white py-2 rounded-md font-bold hover:bg-gray-600 transition cursor-pointer"
           >
+
             ENTRAR
           </button>
+             <button
+                className="w-full bg-[#ADD8E6] text-white py-2 rounded-md font-bold hover:bg-gray-600 transition cursor-pointer"
+                onClick={() => router.push("/")}
+              >
+                VOLTAR AO MENU INICIAL
+              </button>
         </form>
       </div>
     </div>

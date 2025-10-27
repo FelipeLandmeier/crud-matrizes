@@ -1,9 +1,9 @@
-"use client"; // se estiver no app router
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react"; // ícones bonitinhos
+import { Menu, X } from "lucide-react";
 
 const matrizes = [
   { id: 1, nome: "Matriz 1", categoria: "Categoria X" },
